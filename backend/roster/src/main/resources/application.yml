@@ -1,0 +1,28 @@
+disable: SerializationFeature.FAIL_ON_EMPTY_BEANS
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/school
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password:
+    username: root
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
+  sql:
+    init:
+      mode: always
+  application:
+    name: school
+  main:
+    allow-circular-references: true
+
