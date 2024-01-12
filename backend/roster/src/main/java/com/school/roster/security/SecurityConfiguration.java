@@ -51,27 +51,6 @@ public class SecurityConfiguration {
 		 authenticationProvider.setPasswordEncoder(getPasswordEncoder());
 		 return authenticationProvider;
 	 }
-	
-//	@Bean
-//	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//		http.cors().and().csrf().disable()
-//		.authorizeHttpRequests()
-//			.requestMatchers("/api/v1/auth/**").permitAll()
-////			.requestMatchers("/createUser").permitAll()
-////			.requestMatchers("/user/**").hasRole("Admin")
-//			.anyRequest()
-//			.authenticated()
-//		.and()
-//		.sessionManagement()
-//			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//		.and()
-//		.authenticationProvider(authenticationProvider())
-//		.exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
-//		.and()
-//		.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-////		.httpBasic();
-//		return http.build();
-//	}
 
 	 @Bean
 	 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -83,6 +62,10 @@ public class SecurityConfiguration {
 		 	.authorizeHttpRequests()
 		 	.requestMatchers("/api/v1/auth/**")
 		 	.permitAll()
+		 	.requestMatchers("/api/v1/user/**")
+		 	.hasAnyAuthority("Admin", "Teacher", "Student")
+		 	.requestMatchers("/api/v1/student/profile/**")
+		 	.hasAnyAuthority("Admin", "Teacher", "Student")
 		 	.anyRequest()
 		 	.authenticated()
 		 	.and()
