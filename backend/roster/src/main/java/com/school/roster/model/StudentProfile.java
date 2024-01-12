@@ -77,11 +77,22 @@ public class StudentProfile {
 		}
 	}
 
+	public void addAddress(AddressStudent address) {
+		AddressStudent createAddress = new AddressStudent(address.getStreetAddress(),
+				address.getCity(), address.getState(), address.getZipCode(), this);
+		addresses.add(createAddress);
+	}
+
 	public void addPhoneNumber(List<PhoneNumberStudent> phoneNumberList, StudentProfile profile) {
 		for (PhoneNumberStudent phoneNumber : phoneNumberList) {
 			PhoneNumberStudent createNumber = new PhoneNumberStudent(profile, phoneNumber.getPhoneType(), phoneNumber.getPhoneNumber());
 			profile.getPhoneNumbers().add(createNumber);
 		}
+	}
+
+	public void addPhoneNumber(PhoneNumberStudent phone) {
+		PhoneNumberStudent createPhone = new PhoneNumberStudent(this,phone.getPhoneType(), phone.getPhoneNumber());
+		phoneNumbers.add(createPhone);
 	}
 
 	public void addSchoolBackground(List<SchoolBackgroundStudent> schoolList, StudentProfile profile) {
@@ -90,6 +101,11 @@ public class StudentProfile {
 					schoolBackground.getGradeLevel(), schoolBackground.getStartOfDate());
 			profile.getSchoolBackgrounds().add(createSchool);
 		}
+	}
+	public void addSchoolBackground(SchoolBackgroundStudent school){
+		SchoolBackgroundStudent createSchool = new SchoolBackgroundStudent(this, school.getSchoolId(),
+				school.getGradeLevel(), school.getStartOfDate());
+		schoolBackgrounds.add(createSchool);
 	}
 
 	public int calculateAge(LocalDate birthDate) {
@@ -216,5 +232,6 @@ public class StudentProfile {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
 
 }

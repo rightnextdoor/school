@@ -2,16 +2,13 @@ package com.school.roster.controllers;
 
 import java.util.List;
 
+import com.school.roster.model.AddressStudent;
+import com.school.roster.payload.AddressRequest;
+import com.school.roster.payload.PhoneRequest;
+import com.school.roster.payload.SchoolRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.school.roster.model.StudentProfile;
 import com.school.roster.model.User;
@@ -52,4 +49,27 @@ public class StudentProfileController {
 	public List<StudentProfile> getAllStudentProfile() {
 		return studentProfileService.getAllStudentProfiles();
 	}
+
+	@PostMapping("/add/address")
+	public StudentProfile addAddress(@RequestBody AddressRequest address){
+		User user = userService.getUserByUsername(address.getUser().getUsername());
+		return studentProfileService.addAddress(address.getAddress(), user);
+	}
+	@PostMapping("/add/phone")
+	public StudentProfile addPhone(@RequestBody PhoneRequest phone){
+		User user = userService.getUserByUsername(phone.getUser().getUsername());
+		return studentProfileService.addPhone(phone.getPhoneNumber(), user);
+	}
+	@PostMapping("/add/school")
+	public StudentProfile addSchool(@RequestBody SchoolRequest school){
+		User user = userService.getUserByUsername(school.getUser().getUsername());
+		return studentProfileService.addSchool(school.getSchoolBackground(), user);
+	}
+
+	@PatchMapping("/update")
+	public StudentProfile updateProfile(@RequestBody StudentProfile profile){
+		User user = userService.getUserByUsername(profile.getUser().getUsername());
+		return studentProfileService.updateProfile(profile,user);
+	}
+
 }
